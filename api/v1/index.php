@@ -25,13 +25,20 @@ class Rest
 
 					return json_encode(array('status' => 'sucesso', 'dados' => $retorno));
 				} else {
-					return json_encode(array('status' => 'erro', 'dados' => 'Método inexistente!'));
+					# retorno para erro poderia ser um response_code 
+					# retorno para erro poderia ser um response_code  no lugar do json com um array de dados.
+					http_response_code(404);
+					# O erro 404 ou 4:04 é um código de resposta HTTP que indica que o cliente pôde comunicar com o servidor, mas o servidor não pôde encontrar o que foi pedido, 
+					# ou foi configurado para não cumprir o pedido e não revelar a razão, a página não existe mais ou a URL foi inserida incorretamente. Wikipédia
+					// return json_encode(array('status' => 'erro', 'dados' => 'Método inexistente!'));
 				}
 			} else {
-				return json_encode(array('status' => 'erro', 'dados' => 'Classe inexistente!'));
+				http_response_code(404);
+				// return json_encode(array('status' => 'erro', 'dados' => 'Classe inexistente!'));
 			}	
 		} catch (Exception $e) {
-			return json_encode(array('status' => 'erro', 'dados' => $e->getMessage()));
+			http_response_code(400);
+			// return json_encode(array('status' => 'erro', 'dados' => $e->getMessage()));
 		}
 		
 	}
